@@ -1,0 +1,33 @@
+name: Atlanta Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, atlanta]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync to Atlanta
+        run: |
+          echo "Deploy triggered at $(date)"
+          echo "Runner: $(hostname)"
+          echo "Commit: ${{ github.sha }}"
+          echo "Files changed: $(git diff --name-only HEAD~1)"
+
+      - name: Verify services
+        run: |
+          ssh woioeow@23.95.218.144 -p 53621 << 'EOF'
+            echo "=== sing-box ==="
+            systemctl is-active sing-box
+            echo "=== nginx ==="
+            docker ps --filter name=nginx --format "{{.Names}}: {{.Status}}"
+            echo "=== UFW ==="
+            ufw status verbose | head -3
+            echo "=== disk ==="
+            df -h / | tail -1
+          EOF
