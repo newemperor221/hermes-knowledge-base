@@ -1,0 +1,132 @@
+# 服务器资产表 — 自动维护
+# 检索：grep / search_files "服务器IP/简称/用途"
+
+servers:
+  # === 非 root 用户 ===
+  - name: 亚特兰大
+    ip: 23.95.218.144
+    ssh_port: 53621
+    user: woioeow
+    sudo_password: "4561834"
+    root_access: false
+    specs: 2C2.5G45G
+    proxy_port: 44308
+    uuid: 04814792-272a-42f2-8715-4225a8e68934
+    pbk: 7j6iS2pU56dCil6Zc_Y-rKc6DOnWh_FfnfuvOAilsmQ
+    sid: 04814792
+    purpose: VLESS+Reality落地节点，解锁Netflix
+    status: 已部署sing-box
+
+  - name: 3c4g洛杉矶
+    ip: 198.46.147.71
+    ssh_port: 43827
+    user: woioeow
+    sudo_password: "4561834"
+    root_access: false
+    specs: 3C4G
+    purpose: Hermes Agent所在地
+    status: 日常运行
+
+  # === root 用户 ===
+  - name: 1c2.5g洛杉矶
+    ip: 155.94.180.55
+    ssh_port: 58193
+    user: root
+    sudo_password: "4561834"
+    specs: 1C2.5G
+    services: [cloudflared, Komari面板, IP Sentinel主控, Telegram机器人]
+    status: Komari面板+IP Sentinel主控所在服务器
+
+  - name: 东京1
+    ip: 156.231.141.232
+    ssh_port: 47283
+    user: root
+    sudo_password: "4561834"
+    proxy_port: 53791
+    uuid: 7e725b80-07fb-4505-aeb3-be814f999a9b
+    sid: 122d674500d70797
+    pbk: M8gsrgAc1Von6bXbH8v2KGednBej8lDbhQHWxlnYeyo
+    purpose: VLESS+Reality落地
+    status: 被黑客攻击，还未启动
+
+  - name: 香港
+    ip: 45.192.192.210
+    ssh_port: 47632
+    user: root
+    sudo_password: "4561834"
+    proxy_port: 37218
+    uuid: ebdb8818-57fd-484f-9779-a083b4a8b0b6
+    sid: ca1fdcfd88e2e4aa
+    pbk: 7TMG8ivO10i8lTFnexGfwWA2fD2WplDmwO8BIs-VniI
+    purpose: VLESS+Reality落地
+    status: 202.97出口路由质量一般
+
+  - name: 东京2
+    ip: 154.83.94.183
+    ssh_port: 62174
+    user: root
+    sudo_password: "4561834"
+    proxy_port: 38479
+    uuid: c281341e-c517-4d0e-993a-2eb0b7bd698e
+    sid: 6081f059c13e7f32
+    pbk: cI53pViAJAZK1NF71Td_y4d43BchrqRHO2lo5pTXaFY
+    services: [Komari]
+    status: 已加入Komari面板
+
+  - name: 纽约
+    ip: 172.245.159.219
+    ssh_port: 27391
+    user: root
+    sudo_password: "4561834"
+    proxy_port: 34821
+    uuid: 0924c053-c30d-448b-94f4-2174931efadf
+    sid: 649b69dcc1ff9cd6
+    pbk: xqz-kUicVa5AAuNUMnQQd339K9QP-9J6UUsdiUEtbSA
+    purpose: VLESS+Reality落地
+    status: ""
+
+  - name: 堪萨斯
+    ip: 45.39.12.227
+    ssh_port: 63841
+    user: root
+    sudo_password: "4561834"
+    proxy_port: 38417
+    uuid: 44ef519d-a3de-486e-8521-9217f3a872a6
+    sid: 0cd5c89a4e477f4e
+    pbk: lZ-zehPLWlXVf8eaPwsS6XRfLcGtP_aGlxgzeFrcZT4
+    purpose: VLESS+Reality落地
+    status: ""
+
+  - name: 洛杉矶
+    ip: 23.95.201.153
+    ssh_port: 47283
+    user: root
+    sudo_password: "4561834"
+    proxy_port: 37182
+    uuid: cb0981eb-81ce-4142-afd3-ea397a793aed
+    sid: 41068fda27f523c9
+    pbk: hUoemiAif4V4ZPB09RBUuZ4p1PvBCzpqfESxVkYUszk
+    specs: 1C1G
+    purpose: VLESS+Reality落地
+    status: ""
+
+network:
+  campus:
+    ip: "171.211.123.x"
+    egress: "202.97 电信骨干"
+    blocked_ips: ["154.83.x.x"]  # AkileCloud段
+    accessible_ips: ["155.94.x.x", "23.95.x.x", "156.231.x.x", "198.46.x.x"]
+    latency_to_japan: "~86-150ms"
+
+software_inventory:
+  inkos:
+    version: "1.3.6"
+    path: "~/.hermes/node/bin/"
+    config: DeepSeek V3全局
+    status: 待执行流水线
+
+komari:
+  panel_url: "mon.357561.xyz"
+  access: cloudflared隧道（无公网端口暴露）
+  theme: PurCarte-Plus（配置在浏览器localStorage，不在服务端）
+  notes: 勿随意操作admin页面（曾误删主题文件导致500）
