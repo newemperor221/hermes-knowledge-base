@@ -14,18 +14,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Add Atlanta SSH host key
+      - name: Setup SSH key
+        env:
+          ATLANTA_SSH_KEY: ${{ secrets.ATLANTA_SSH_KEY }}
         run: |
           mkdir -p ~/.ssh
+          echo "$ATLANTA_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H -p 53621 23.95.218.144 >> ~/.ssh/known_hosts 2>/dev/null
-          echo "Host key added"
 
-      - name: Sync to Atlanta
+      - name: Deploy info
         run: |
-          echo "Deploy triggered at $(date)"
+          echo "Deploy at $(date)"
           echo "Runner: $(hostname)"
           echo "Commit: ${{ github.sha }}"
-          echo "Files: ${{ join(steps.changed.outputs.files, ', ') }}"
 
       - name: Verify services
         run: |
