@@ -9,6 +9,7 @@
 
 | 域 | 文件 | 关键问题 |
 |----|------|---------|
+| GitHub 凭证（gh vs git） | `gh-git-auth.md` | gh 已登录但 git push 失败 |
 | sing-box Reality 部署 | `sing-box-reality.md` | 字段名/结构/utls fingerprint |
 | SSL + Let's Encrypt | `ssl-letsencrypt.md` | 80端口占用/webroot/docker volume |
 | Docker + nginx | `docker-nginx.md` | docker-compose/健康检查/重启策略 |
@@ -19,10 +20,24 @@
 
 ## 添加新踩坑
 
-每次遇到新坑时：
-1. 找到对应域的文件
-2. 追加到 `## 踩坑记录` 板块
-3. 格式：`**问题** → **解决方案** + 验证方法`
+**强制规则**：踩坑后立即写入，不得"之后再说"。
+
+触发条件（满足任一即写）：
+- 工具调用报错，涉及之前没见过的错误 → 立即查因并写入
+- 跑完一个完整流程（5+ 工具调用）→ 回顾有没有新坑，有则写
+- 用户说"这个你之前不是弄过吗" → 说明没存档，立即补
+
+写入时机：问题解决后的第一个空闲窗口，立即写文件，不要延后。
+
+格式：
+```markdown
+### N. [简短标题]
+**问题**：...
+**原因**：...
+**解决**：...
+**验证**：...
+**相关文件**：~/.hermes/inventory/worklog/xxx.md
+```
 
 ---
 

@@ -6,6 +6,19 @@
 
 ## 踩坑记录
 
+### 0. sing-box 重启后旧进程占端口
+**问题**：`systemctl restart sing-box` 后日志报 `bind: address already in use`，systemd 进入重启循环
+**原因**：旧 sing-box 进程没完全退出，端口仍被占用
+**解决**：
+```bash
+# 先杀掉占用端口的进程
+sudo kill -9 $(sudo lsof -t -i:44308)
+sleep 1
+sudo systemctl start sing-box
+```
+**验证**：`sudo systemctl status sing-box` → `active (running)`
+**预防**：service 文件加 `RestartSec=5` 给足退出时间
+
 ### 1. sing-box 1.9 字段名变更
 **问题**：配置报错或无效
 **原因**：1.9 版本字段名改了
