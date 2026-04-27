@@ -14,6 +14,7 @@
 | SSL + Let's Encrypt | `ssl-letsencrypt.md` | 80端口占用/webroot/docker volume |
 | Docker + nginx | `docker-nginx.md` | docker-compose/健康检查/重启策略 |
 | 服务器初始化 | `server-init.md` | UFW/fail2ban/SSH加固 |
+| GitHub Actions CI/CD | `github-actions-cicd.md` | self-hosted runner/SSH Secret/CI流程 |
 | Atlanta 练手总结 | `atlanta-summary.md` | 全流程复盘 |
 
 ---
