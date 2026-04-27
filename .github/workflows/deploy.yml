@@ -11,17 +11,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add Atlanta SSH host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H -p 53621 23.95.218.144 >> ~/.ssh/known_hosts 2>/dev/null
+          echo "Host key added"
 
       - name: Sync to Atlanta
         run: |
           echo "Deploy triggered at $(date)"
           echo "Runner: $(hostname)"
           echo "Commit: ${{ github.sha }}"
-          echo "Files changed: $(git diff --name-only HEAD~1)"
+          echo "Files: ${{ join(steps.changed.outputs.files, ', ') }}"
 
       - name: Verify services
         run: |
-          ssh woioeow@23.95.218.144 -p 53621 << 'EOF'
+          ssh -o StrictHostKeyChecking=no woioeow@23.95.218.144 -p 53621 << 'EOF'
             echo "=== sing-box ==="
             systemctl is-active sing-box
             echo "=== nginx ==="
